@@ -37,11 +37,11 @@ class Cart {
 
 	public addProduct(product: IProduct | IProduct[]): void {
 		if (this.isProductArray(product)) {
-			let newArray_products = [
+			const newArrayProducts = [
 				...this._products,
 				...product
 			]
-			this._products = newArray_products
+			this._products = newArrayProducts
 		} else {
 			this._products.push(product)
 		}
@@ -60,7 +60,15 @@ class Cart {
 		}
 	}
 
+	private calcTotalCost(products: IProduct[]) {
+		const totalCost = products.reduce((prev: number, cur: IProduct) => {
+			return prev + cur.price
+		}, 0)
+		return this._totalCost = totalCost
+	}
+
 	get deliveryInfo() {
+		this.calcTotalCost(this._products)
 		let cartInfo = {
 			products: this._products,
 			delivery: this._delivery,

@@ -9,11 +9,11 @@ class Cart {
     }
     addProduct(product) {
         if (this.isProductArray(product)) {
-            let newArray_products = [
+            const newArrayProducts = [
                 ...this._products,
                 ...product
             ];
-            this._products = newArray_products;
+            this._products = newArrayProducts;
         }
         else {
             this._products.push(product);
@@ -30,7 +30,14 @@ class Cart {
             };
         }
     }
+    calcTotalCost(products) {
+        const totalCost = products.reduce((prev, cur) => {
+            return prev + cur.price;
+        }, 0);
+        return this._totalCost = totalCost;
+    }
     get deliveryInfo() {
+        this.calcTotalCost(this._products);
         let cartInfo = {
             products: this._products,
             delivery: this._delivery,
@@ -43,5 +50,5 @@ let cart = new Cart();
 cart.addProduct([{ id: 1, title: 'book', price: 100 }, { id: 2, title: 'lamp', price: 50 }]);
 cart.addProduct([{ id: 3, title: 'cheese', price: 50 }, { id: 4, title: 'apple', price: 33 }, { id: 5, title: 'cat', price: 100 }]);
 cart.addProduct([{ id: 332, title: 'UFO', price: 13 }]);
-cart.setDelivery({ date: new Date(), to: { city: 'Rostov', street: 'Krasnoarmeyskaya', house: 5 } });
+cart.setDelivery({ date: new Date(), to: { city: 'Moscow', street: 'Krasnoarmeyskaya', house: 5 } });
 console.log(cart.deliveryInfo);
